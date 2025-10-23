@@ -3,7 +3,6 @@ import shutil
 import random
 from natsort import natsorted
 
-
 def search_name_move_suffix(target_path, file_ext='png'):
     """搜索指定扩展名的文件"""
     all_files = os.listdir(target_path)
@@ -117,15 +116,11 @@ names: {class_names}
 
 if __name__=="__main__":
     rtts_images_dir = r'E:\PythonProject\target_detection\data\RTTS\JPEGImages'
-    rtts_labels_dir = r'E:\PythonProject\target_detection\data\RTTS\anns'  # 你之前转换的标签目录
+    rtts_labels_dir = r'E:\PythonProject\target_detection\data\RTTS\anns'  # 之前转换的标签目录
     output_dir = r'E:\PythonProject\target_detection\data\RTTS_split'
-
-    # RTTS数据集类别（根据实际情况调整）
+    # RTTS数据集类别
     rtts_class_names = ['car', 'person', 'bus', 'motorbike', 'bicycle']
-
-    # 设置随机种子以确保可重复性
     random.seed(42)
-
     # 执行数据集分割和重组
     print("开始分割数据集...")
     train_files, val_files, test_files = split_and_reorganize_dataset(
@@ -134,9 +129,6 @@ if __name__=="__main__":
 
     # 创建data.yaml配置文件
     create_data_yaml(output_dir, rtts_class_names)
-
-
-    # 保存文件列表（可选）
     def save_file_lists(output_dir, train_files, val_files, test_files):
         """保存各集合的文件列表"""
         with open(os.path.join(output_dir, 'train.txt'), 'w') as f:
