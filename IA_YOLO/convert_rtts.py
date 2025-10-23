@@ -3,12 +3,10 @@ import os
 import xml.etree.ElementTree as ET
 from natsort import natsorted
 
-
 def search_name_move_suffix(target_path, file_ext='png'):
     all_files = os.listdir(target_path)
     png_files = [file.split('.')[0] for file in all_files if file.lower().endswith(file_ext)]
     return natsorted(png_files)
-
 
 def xml_to_yolo_txt(xml_path, txt_path, img_width, img_height, class_names):
     """
@@ -58,17 +56,11 @@ if __name__ == "__main__":
     rtts_images_dir = r'E:\PythonProject\target_detection\data\RTTS\JPEGImages'
     rtts_anns_dir = r'E:\PythonProject\target_detection\data\RTTS\Annotations'
     rtts_save_dir = r'E:\PythonProject\target_detection\data\RTTS\anns'
-
-    # 创建保存目录
     os.makedirs(rtts_save_dir, exist_ok=True)
-
-    # RTTS数据集的类别名称（根据实际数据集调整）
+    # RTTS数据集的类别名称
     rtts_class_names = ['car', 'person', 'bus', 'motorbike', 'bicycle']
-
     rtts_file_list = search_name_move_suffix(rtts_images_dir, 'png')
-
     print(f"找到 {len(rtts_file_list)} 个图像文件")
-
     for image_name in rtts_file_list:
         image_path = os.path.join(rtts_images_dir, image_name + '.png')
         xml_path = os.path.join(rtts_anns_dir, image_name + '.xml')
@@ -78,7 +70,6 @@ if __name__ == "__main__":
             continue
         image = cv2.imread(image_path)
         h, w, c = image.shape
-
         # 转换XML为YOLO TXT格式
         xml_to_yolo_txt(xml_path, txt_path, w, h, rtts_class_names)
         print(f"已转换: {image_name}")
